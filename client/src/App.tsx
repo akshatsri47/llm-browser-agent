@@ -1,34 +1,13 @@
+// App.tsx
 import React from 'react';
-import AppLayout from './components/layout/AppLayout';
+import LandingPage from './components/Landingpage';  // Ensure the import path is correct based on your project structure
 
 const App: React.FC = () => {
   return (
-    <AppLayout />
+    <div className="App">
+      <LandingPage />  {/* This renders the LandingPage component */}
+    </div>
   );
-};
-
-export default App;
-
-// src/api/chat.ts
-// This is where you would integrate with your Quart backend
-
-export interface ChatResponse {
-  reply: string;
-  simulationUrl?: string;
 }
 
-// export const sendChatMessage = async (message: string): Promise<ChatResponse> => {
-//   const response = await fetch('http://localhost:5000/api/chat', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify({ message }),
-//   });
-
-//   if (!response.ok) {
-//     throw new Error('Failed to send message');
-//   }
-
-//   return response.json();
-// };
+export default App;
