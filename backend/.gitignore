@@ -1,0 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+ENV/
+env/
+.venv/
+
+# VS Code settings
+.vscode/
+
+# Mac/Linux system files
+.DS_Store
+
+# Pytest / test cache
+.pytest_cache/
+.cache/
+
+# Jupyter Notebook checkpoints (if used)
+.ipynb_checkpoints/
+
+# Logs
+*.log
+
+# Python egg metadata
+*.egg-info/
+dist/
+build/
+
+# dotenv files (environment variables)
+.env
+.env.*
+
+# mypy / coverage / profiling
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+profile/
+
+# Hypercorn / Quart temp files
+instance/
+*.db
+*.sqlite3
