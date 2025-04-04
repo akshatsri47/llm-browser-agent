@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 const SimulationViewer: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const vncUrl = "http://3.84.243.199:6080/vnc.html";
+  const vncUrl = "http://localhost:6080/vnc.html";
 
   const handleIframeLoad = () => {
     setIsLoading(false);

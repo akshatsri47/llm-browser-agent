@@ -1,5 +1,3 @@
-
-// src/components/chat/ChatInterface.tsx
 import React, { useState, useEffect, useRef } from 'react';
 
 interface Message {
@@ -37,7 +35,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onUpdateSimulation }) => 
 
   const handleSendMessage = async () => {
     if (!inputValue.trim()) return;
-
+  
     // Add user message
     const userMessage: Message = {
       id: `msg-${Date.now()}`,
@@ -45,42 +43,42 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onUpdateSimulation }) => 
       content: inputValue,
       timestamp: new Date(),
     };
-
+  
     setMessages((prev) => [...prev, userMessage]);
     setInputValue('');
     setIsLoading(true);
-
+  
     try {
-      // Send message to backend
-      const response = await fetch('http://localhost:5000/api/chat', {
+      // Send message to backend's /send_task API
+      const response = await fetch('http://localhost:5000/send_task', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          message: inputValue,
+          task: inputValue,
         }),
       });
-
+  
       const data = await response.json();
-
-      // Add assistant message
+  
+      // Add assistant message with the actual content from the agent
       const assistantMessage: Message = {
         id: `msg-${Date.now() + 1}`,
         role: 'assistant',
-        content: data.reply || 'I processed your request.',
+        content: data.message || 'I processed your request but received no result.',
         timestamp: new Date(),
       };
-
+  
       setMessages((prev) => [...prev, assistantMessage]);
-
+  
       // If simulation URL is provided, update it
       if (data.simulationUrl) {
         onUpdateSimulation(data.simulationUrl);
       }
     } catch (error) {
       console.error('Error sending message:', error);
-      
+  
       // Add error message
       const errorMessage: Message = {
         id: `msg-${Date.now() + 1}`,
@@ -88,13 +86,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onUpdateSimulation }) => 
         content: 'Failed to send message. Please try again.',
         timestamp: new Date(),
       };
-
+  
       setMessages((prev) => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
   };
-
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -168,15 +165,16 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onUpdateSimulation }) => 
 };
 
 export default ChatInterface;
+
 const SendIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-    </svg>
-  );
-  
-  const SpinnerIcon: React.FC<{ className?: string }> = ({ className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24">
-      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-    </svg>
-  );
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+  </svg>
+);
+
+const SpinnerIcon: React.FC<{ className?: string }> = ({ className }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24">
+    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+  </svg>
+);
