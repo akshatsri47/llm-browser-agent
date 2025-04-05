@@ -2,33 +2,29 @@ import React from "react";
 import { auth, googleProvider } from '../../utils/firebase';
 import { useSignInWithGoogle } from 'react-firebase-hooks/auth';
 
-import { createUserDocument } from "../../utils/userHelpers";
-
 export default function LandingPage() {
     const [signInWithGoogle, user, loading, error] = useSignInWithGoogle(auth);
+
     const handleSignIn = async () => {
-        try {
-          const result: UserCredential = await signInWithPopup(auth, googleProvider);
-          const user = result.user;
-          
-          // Check if user is new
-          if (result.user.metadata.creationTime === result.user.metadata.lastSignInTime) {
-            await createUserDocument(user);
-            console.log("New user document created");
-          } else {
-            // Update last login time for existing user
-            const userDocRef = doc(db, "users", user.uid);
-            await setDoc(userDocRef, {
-              lastLogin: new Date().toISOString()
-            }, { merge: true });
-          }
-          
-          // Handle successful login
-        } catch (error) {
-          console.error('Authentication error:', error);
-        }
-      };      
-    return (
+      try {
+        await signInWithGoogle();
+      } catch (error) {
+        console.error('Authentication error:', error);
+      }
+    };
+  
+    if (error) {
+      return (
+        <div className="text-red-600 p-4 text-center">
+          Error: {error.message}
+        </div>
+      );
+    }
+  
+    if (loading) {
+      return <div className="text-center p-4">Loading...</div>;
+    }
+  return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50 text-gray-900">
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm shadow-sm py-4 px-6 flex items-center justify-between">

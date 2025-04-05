@@ -1,0 +1,94 @@
+google_form: |
+  *Objective*: Complete the Google Form at {url} with intelligent responses.
+  *Instructions*:
+  1. Analyze all form fields and their types
+  2. Fill fields using these rules:
+     - Email: {email}
+     - Password: {password}
+     - Dates: {date}
+     - Names: "Saatvik Agnihotri"
+     - Technical questions: Provide factual answers about {topic}
+     - Feedback fields: Generate 2-3 paragraph response about {topic} for {audience} in {industry}
+     - Multiple choice: Select most context-appropriate option
+     - Checkboxes: Select relevant options to {topic}
+     - Required fields: Use "N/A" if no specific data
+  3. Handle multi-page forms
+  4. Submit when complete
+  5. Confirm successful submission
+
+linkedin: |
+  # LinkedIn Job Application Automation
+  
+  ## OBJECTIVE
+  Apply to multiple jobs on LinkedIn using the "Easy Apply" feature when available, or save jobs for later if they redirect to external sites.
+  
+  ## TASK
+  
+  ### 1. LOGIN
+  ```
+  Navigate to linkedin.com
+  Wait for page to load (3s)
+  Look for and click "Sign in" button
+  Enter credentials:
+    - Email: {email} in first input field
+    - Password: {password} in second input field
+  Click Sign in button
+  Wait for successful login (5s)
+  Handle security verification if prompted
+  ```
+  
+  ### 2. SEARCH FOR JOBS
+  ```
+  Click on Jobs icon in top navigation
+  Wait for Jobs page to load (3s)
+  Find search field and enter {job_query}
+  Press Enter to search
+  Wait for search results (5s)
+  ```
+  
+  ### 3. PROCESS JOB LISTINGS (REPEAT FOR 5 JOBS)
+  ```
+  For each job listing:
+    EXTRACT and REMEMBER job title and company name
+    Click on job listing to view details
+    Wait for job details to load (3s)
+    Check if "Easy Apply" button exists
+       If "Easy Apply" exists:
+      Click "Easy Apply" button
+      Wait for form to load (2s)
+      Complete application form:
+        Fill required text fields with appropriate information
+        Upload resume if requested (use x_resume_path)
+        Check any required checkboxes (prefer "Yes" for qualifications)
+        Click Next/Continue/Submit buttons as they appear
+        Wait for confirmation (3s)
+      Close any confirmation dialogs
+      Record successful application
+       If only regular "Apply" button exists:
+      DO NOT click it (avoids leaving LinkedIn)
+      Find and click "Save" button instead
+      Wait for save confirmation (1s)
+      Record job as saved
+       Return to search results:
+      Click browser back button OR
+      Navigate directly to job search results URL
+      Wait for search results to reload (3s)
+         Track progress (jobs applied vs saved)
+  ```
+  
+  ### IMPORTANT NOTES
+  - ALWAYS wait for page loads before interacting with elements
+  - NEVER attempt to apply through external websites
+  - If a job can't be processed, move to the next one
+  - Check element existence before clicking
+  - Use browser back navigation with caution
+
+website_testing: |
+  Navigate to {url} and test the following:
+  
+  1. Check if all links are working
+  2. Verify form submissions
+  3. Test responsive design on multiple screen sizes
+  4. Report any bugs or issues found
+
+custom: "Complete the following task using browser automation: {task_text}"

@@ -1,13 +1,18 @@
 // App.tsx
 import React from 'react';
-import LandingPage from './components/Landingpage';  // Ensure the import path is correct based on your project structure
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LandingPage from './components/Landingpage';
+import AppLayout from './components/layout/AppLayout';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <LandingPage />  {/* This renders the LandingPage component */}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/app/*" element={<AppLayout />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
